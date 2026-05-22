@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apology 🩵</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Noto Sans Tamil', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #ffd6e0, #cde7ff); /* 💗 pink + 🩵 blue */
+    overflow: hidden;
+}
+
+/* Header */
+.header {
+    padding: 12px;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+}
+
+/* Chat */
+.chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Messages */
+.msg {
+    max-width: 75%;
+    padding: 10px 14px;
+    margin: 6px 0;
+    border-radius: 18px;
+    font-size: 14px;
+    opacity: 0;
+}
+
+/* Smooth animation */
+.me {
+    align-self: flex-end;
+    background: #ffffff;
+    color: #333;
+    animation: slideRight 0.4s ease forwards;
+}
+
+.her {
+    align-self: flex-start;
+    background: rgba(255,255,255,0.3);
+    color: white;
+    animation: slideLeft 0.4s ease forwards;
+}
+
+@keyframes slideRight {
+    from { transform: translateX(20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideLeft {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Input */
+.inputArea { padding: 10px; }
+
+.inputWrap {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 25px;
+    padding: 5px;
+}
+
+/* Suggest */
+.suggestBtn {
+    font-size: 12px;
+    background: #ffe3ec; /* pink */
+    color: #ff4d6d;
+    border-radius: 15px;
+    padding: 6px 10px;
+    margin-right: 6px;
+    cursor: pointer;
+}
+
+/* Input */
+input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 10px;
+}
+
+/* Send */
+.sendBtn {
+    background: #4da6ff; /* blue */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 12px;
+}
+
+/* Nudge */
+.nudge {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    margin-top: 6px;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+/* Floating blue hearts (simple + glowing) */
+.particle {
+    position: fixed;
+    bottom: -10px;
+    font-size: 14px;
+    animation: floatUp linear forwards;
+    opacity: 0.7;
+    text-shadow: 0 0 8px #66ccff, 0 0 12px #66ccff;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header" id="header">Apology… 💬</div>
+
+<div class="chat" id="chat"></div>
+
+<div class="inputArea" id="inputArea">
+
+    <div class="inputWrap">
+        <div class="suggestBtn" onclick="autoFill()">I forgive U 🩵</div>
+        <input type="text" id="msgInput" placeholder="Type a message...">
+        <button class="sendBtn" onclick="sendMessage()">Send</button>
+    </div>
+
+    <div class="nudge" id="nudge">
+        🥺 Indha kutty paiyana manuchuru papa… pls… 🩵
+    </div>
+
+</div>
+
+<script>
+const chat = document.getElementById("chat");
+const input = document.getElementById("msgInput");
+const header = document.getElementById("header");
+
+const messages = [
+"Papa… 💔",
+"Mama really Sorry… 😔",
+"நான் ஏன் இப்படி behave பண்ணுறேன்னு எனக்கே புரியலை…",
+"ஏன் attention கொடுக்க மாட்டேங்குறேன்… 😞",
+"ஏன் உன்னை understand பண்ணிக்க மாட்டேங்குறேன்… 🥺",
+"ஏன் help பண்ண மாட்டேங்குறேன்… 😣",
+"ஏன் உன் feelings புரியாம இருக்கேன்… 💭",
+"ஏன் value கொடுக்க மாட்டேங்குறேன்… 💔",
+"இப்போ எனக்கு எதுவுமே clear-ஆ இல்லை…",
+"நான் சரின்னு நினைச்சுதான் act பண்ணுறேன்…",
+"ஆனா பல விஷயங்கள் wrong ஆகுது… ⚠️",
+"இதெல்லாம் எப்போ correct ஆகும்னு தெரியலை… 🥺💔",
+"ஆனா நான் change ஆகுறேன்… promise 🤞✨",
+"emotional-ஆ feel பண்ணி உனக்கு support-ஆ இருப்பேன்… 🩵",
+"mama va konjo purunjuko di thango… 🥺🩵",
+"நீ safe-ஆ feel பண்ணுற இடமா நான்தான் இருப்பேன்… 💗🫶✨",
+"Mama always loves U Papa… 🩵"
+];
+
+let i = 0;
+function showMessage() {
+    if (i < messages.length) {
+        let div = document.createElement("div");
+        div.className = "msg me";
+        div.innerText = messages[i];
+        chat.appendChild(div);
+        div.scrollIntoView({behavior:"smooth"});
+        i++;
+        setTimeout(showMessage, 800);
+    }
+}
+showMessage();
+
+/* Suggest */
+function autoFill() {
+    input.value = "I forgive U 🩵";
+}
+
+/* Typing */
+input.addEventListener("input", () => {
+    header.innerText = input.value.length ? "Typing… 💬" : "Apology… 💬";
+});
+
+/* Send */
+function sendMessage() {
+    let text = input.value.trim();
+    if (!text) return;
+
+    let myMsg = document.createElement("div");
+    myMsg.className = "msg me";
+    myMsg.innerText = text;
+    chat.appendChild(myMsg);
+
+    input.value = "";
+    header.innerText = "Apology… 💬";
+
+    setTimeout(() => {
+        let reply = document.createElement("div");
+        reply.className = "msg her";
+        reply.innerText = "I forgive you… 🩵";
+        chat.appendChild(reply);
+    }, 1200);
+}
+
+/* Floating hearts */
+setInterval(()=>{
+    let p=document.createElement("div");
+    p.className="particle";
+    p.innerHTML="🩵";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(Math.random()*3+4)+"s";
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(),6000);
+},1200);
+
+/* Nudge */
+setTimeout(()=>{
+    document.getElementById("nudge").style.opacity="1";
+    document.getElementById("inputArea").style.transform="translateY(-10px)";
+},30000);
+</script>
+
+</body>
+</html>
